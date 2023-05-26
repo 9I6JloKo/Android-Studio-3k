@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.os.Bundle;
 import android.text.SpannableString;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -52,8 +53,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // assign variable
-        guitarList = findViewById(R.id.list);
-        databaseHelper = new DatabaseHelper(getApplicationContext());
         tabLayout=findViewById(R.id.tab_layout);
         viewPager=findViewById(R.id.view_pager);
         chb = findViewById(R.id.checkBox6);
@@ -68,16 +67,19 @@ public class MainActivity extends AppCompatActivity {
         arrayList.add("GuitarsList");
         // Setup tab layout
         tabLayout.setupWithViewPager(viewPager);
-
         // Prepare view pager
         prepareViewPager(viewPager,arrayList);
+
+        View inflatedView = getLayoutInflater().inflate(R.layout.fragment_guitars_list, null);
+        guitarList = (ListView) inflatedView.findViewById(R.id.list);
+        databaseHelper = new DatabaseHelper(inflatedView.getContext());
         db = databaseHelper.getReadableDatabase();
         // определяем, какие столбцы из курсора будут выводиться в ListView
-        guitarsCursor =  db.rawQuery("select name, year, description from "+ DatabaseHelper.TABLE, null);
+        guitarsCursor =  db.rawQuery("select * from "+ DatabaseHelper.TABLE, null);
         String[] headers = new String[] {DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_YEAR, DatabaseHelper.COLUMN_DESCRIPTION};
         // создаем адаптер, передаем в него курсор
-        guitarAdapter = new SimpleCursorAdapter(this, R.layout.list_row, guitarsCursor, headers, new int[]{R.id.name, R.id.year, R.id.description}, 0);
-//        guitarList.setAdapter(guitarAdapter);
+        guitarAdapter = new SimpleCursorAdapter(inflatedView.getContext(), R.layout.list_row, guitarsCursor, headers, new int[]{R.id.name, R.id.year, R.id.description}, 0);
+        guitarList.setAdapter(guitarAdapter);
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         // TODO Auto-generated method stub
