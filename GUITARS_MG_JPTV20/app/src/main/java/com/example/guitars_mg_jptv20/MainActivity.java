@@ -1,10 +1,17 @@
 package com.example.guitars_mg_jptv20;
 
+import android.annotation.SuppressLint;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.widget.CheckBox;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +24,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,12 +32,28 @@ public class MainActivity extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager viewPager;
     CheckBox chb;
+
+    DatabaseHelper databaseHelper;
+    SQLiteDatabase db;
+    Cursor guitarsCursor;
+    SimpleCursorAdapter guitarAdapter;
+    ListView guitarList;
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        // Закрываем подключение и курсор
+        db.close();
+        guitarsCursor.close();
+    }
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         // assign variable
+        guitarList = findViewById(R.id.list);
+        databaseHelper = new DatabaseHelper(getApplicationContext());
         tabLayout=findViewById(R.id.tab_layout);
         viewPager=findViewById(R.id.view_pager);
         chb = findViewById(R.id.checkBox6);
@@ -41,12 +65,19 @@ public class MainActivity extends AppCompatActivity {
         arrayList.add("Materials");
         arrayList.add("History");
         arrayList.add("Link");
+        arrayList.add("GuitarsList");
         // Setup tab layout
         tabLayout.setupWithViewPager(viewPager);
 
         // Prepare view pager
         prepareViewPager(viewPager,arrayList);
-
+        db = databaseHelper.getReadableDatabase();
+        // определяем, какие столбцы из курсора будут выводиться в ListView
+        guitarsCursor =  db.rawQuery("select name, year, description from "+ DatabaseHelper.TABLE, null);
+        String[] headers = new String[] {DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_YEAR, DatabaseHelper.COLUMN_DESCRIPTION};
+        // создаем адаптер, передаем в него курсор
+        guitarAdapter = new SimpleCursorAdapter(this, R.layout.list_row, guitarsCursor, headers, new int[]{R.id.name, R.id.year, R.id.description}, 0);
+//        guitarList.setAdapter(guitarAdapter);
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         // TODO Auto-generated method stub
@@ -55,8 +86,9 @@ public class MainActivity extends AppCompatActivity {
         menu.add(0, 1, 0, "Materials");
         menu.add(0, 2, 0, "History");
         menu.add(0, 3, 0, "Link");
-        menu.add(1, 4, 0, "First");
-        menu.add(1, 5, 0, "Latest");
+        menu.add(0, 4, 0, "GuitarsList");
+        menu.add(1, 5, 0, "First");
+        menu.add(1, 6, 0, "Latest");
         return super.onCreateOptionsMenu(menu);
     }
     @Override
@@ -82,10 +114,13 @@ public class MainActivity extends AppCompatActivity {
                 tabLayout.getTabAt(3).select();
                 break;
             case 4:
-                tabLayout.getTabAt(0).select();
+                tabLayout.getTabAt(4).select();
                 break;
             case 5:
-                tabLayout.getTabAt(3).select();
+                tabLayout.getTabAt(0).select();
+                break;
+            case 6:
+                tabLayout.getTabAt(4).select();
                 break;
             default:
                 tabLayout.getTabAt(0).select();
@@ -102,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
         MaterialsFragment materialsFragment=new MaterialsFragment();
         HistoryFragment historyFragment=new HistoryFragment();
         LinkFragment linkFragment=new LinkFragment();
+        GuitarsListFragment guitarsListFragment=new GuitarsListFragment();
         // Use for loop
 //        for(int i=0;i<arrayList.size();i++)
 //        {
@@ -129,6 +165,8 @@ public class MainActivity extends AppCompatActivity {
         historyFragment=new HistoryFragment();
         adapter.addFragment(linkFragment,arrayList.get(3));
         linkFragment=new LinkFragment();
+        adapter.addFragment(guitarsListFragment,arrayList.get(4));
+        guitarsListFragment= new GuitarsListFragment();
         // set adapter
         viewPager.setAdapter(adapter);
     }
