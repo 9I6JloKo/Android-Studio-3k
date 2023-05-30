@@ -10,23 +10,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:textSize="17dp" />
+        android:textSize="20dp" />
 
     <TextView
         android:id="@+id/year"
+        android:textStyle="italic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/name"
         android:layout_marginTop="7dp"
         android:textColor="#343434"
-        android:textSize="14dp" />
+        android:textSize="17dp" />
+
     <TextView
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/year"
-        android:layout_alignBottom="@+id/year"
-        android:layout_alignParentRight="true"
+        android:layout_below="@id/year"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="0dp"
         android:textColor="#343434"
         android:textSize="14dp" />
 </RelativeLayout>

@@ -1,12 +1,20 @@
 package com.example.guitars_mg_jptv20;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +32,23 @@ public class GuitarsListFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private static final String DATABASE_NAME = "guitarStore.db"; // название бд
+    private static final int SCHEMA = 1; // версия базы данных
+    static final String TABLE = "guitars"; // название таблицы в бд
+    // названия столбцов
+    DatabaseHelper databaseHelper;
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        // Закрываем подключение и курсор
+        db.close();
+        guitarsCursor.close();
+    }
+    SQLiteDatabase db;
+    Cursor guitarsCursor;
+    SimpleCursorAdapter guitarAdapter;
+    ListView guitarList;
     public GuitarsListFragment() {
         // Required empty public constructor
     }
@@ -59,6 +84,26 @@ public class GuitarsListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_guitars_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_guitars_list, container, false);
+        guitarList = (ListView) view.findViewById(R.id.list);
+        Button addButton = (Button) view.findViewById(R.id.addButton);
+        databaseHelper = new DatabaseHelper(view.getContext());
+        db = databaseHelper.getReadableDatabase();
+        // определяем, какие столбцы из курсора будут выводиться в ListView
+        guitarsCursor =  db.rawQuery("select * from "+ DatabaseHelper.TABLE, null);
+        String[] headers = new String[] {DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_YEAR, DatabaseHelper.COLUMN_DESCRIPTION};
+        // создаем адаптер, передаем в него курсор
+        guitarAdapter = new SimpleCursorAdapter(view.getContext(), R.layout.list_row, guitarsCursor, headers, new int[]{R.id.name, R.id.year, R.id.description}, 0);
+        guitarList.setAdapter(guitarAdapter);
+//        view.getContext().deleteDatabase(DATABASE_NAME);
+//        onDestroy();
+        addButton.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AddElementActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
+        return view;
     }
 }

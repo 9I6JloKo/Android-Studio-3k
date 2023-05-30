@@ -1,6 +1,5 @@
 package com.example.guitars_mg_jptv20;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -67,7 +66,7 @@ public class HistoryFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_history, container, false);
         Button btnLeft = view.findViewById(R.id.imgBtn_left);
-        TextView textView = view.findViewById(R.id.textView2);
+        TextView textView = view.findViewById(R.id.textid);
         textView.setBackgroundColor(Color.GRAY);
         textView.setTextColor(Color.WHITE);
         textView.setTextSize(16);
