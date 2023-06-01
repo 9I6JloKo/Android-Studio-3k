@@ -19,10 +19,13 @@ public class AddElementActivity extends AppCompatActivity {
     TextView description;
     DatabaseHelper databaseHelper;
     SQLiteDatabase db;
+
+    TextView mainInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_element);
+        mainInfo = findViewById(R.id.textView2);
         name = findViewById(R.id.nameTextAdd);
         year = findViewById(R.id.yearTextAdd);
         description = findViewById(R.id.descriptionTextAdd);
@@ -32,12 +35,21 @@ public class AddElementActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), MainActivity.class);
                 startActivity(intent);
-                v.getContext().st;
             }
         });
-        databaseHelper = new DatabaseHelper(getApplicationContext());
-        db = databaseHelper.getReadableDatabase();
-        db.execSQL("INSERT INTO "+ databaseHelper.TABLE +" (" + databaseHelper.COLUMN_NAME
-                + ", " + databaseHelper.COLUMN_YEAR  + ", " + databaseHelper.COLUMN_DESCRIPTION + ") VALUES (" + name.getText() + ", " + year.getText() + ", " + description.getText() + ");");
+        addElemButton.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                if(name.getText().length() != 0 && year.getText().length() != 0 && description.getText().length() != 0){
+                    databaseHelper = new DatabaseHelper(getApplicationContext());
+                    db = databaseHelper.getReadableDatabase();
+                    db.execSQL("INSERT INTO "+ databaseHelper.TABLE +" (" + databaseHelper.COLUMN_NAME
+                            + ", " + databaseHelper.COLUMN_YEAR  + ", " + databaseHelper.COLUMN_DESCRIPTION + ") VALUES ('" + name.getText() + "', " + year.getText() + ", '" + description.getText() + "');");
+                    Intent intent = new Intent(v.getContext(), MainActivity.class);
+                    startActivity(intent);
+                }else{
+                    mainInfo.setText("fields required!");
+                }
+            }
+        });
     }
 }

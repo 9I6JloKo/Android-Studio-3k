@@ -96,7 +96,6 @@ public class GuitarsListFragment extends Fragment {
         guitarAdapter = new SimpleCursorAdapter(view.getContext(), R.layout.list_row, guitarsCursor, headers, new int[]{R.id.name, R.id.year, R.id.description}, 0);
         guitarList.setAdapter(guitarAdapter);
 //        view.getContext().deleteDatabase(DATABASE_NAME);
-//        onDestroy();
         addButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), AddElementActivity.class);
