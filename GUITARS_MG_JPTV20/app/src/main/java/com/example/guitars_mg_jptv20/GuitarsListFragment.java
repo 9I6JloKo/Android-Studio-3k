@@ -6,16 +6,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -92,9 +92,9 @@ public class GuitarsListFragment extends Fragment {
         db = databaseHelper.getReadableDatabase();
         // определяем, какие столбцы из курсора будут выводиться в ListView
         guitarsCursor =  db.rawQuery("select * from "+ DatabaseHelper.TABLE, null);
-        String[] headers = new String[] {DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_YEAR, DatabaseHelper.COLUMN_DESCRIPTION};
+        String[] headers = new String[] {DatabaseHelper.COLUMN_ID, DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_YEAR, DatabaseHelper.COLUMN_DESCRIPTION};
         // создаем адаптер, передаем в него курсор
-        guitarAdapter = new SimpleCursorAdapter(view.getContext(), R.layout.list_row, guitarsCursor, headers, new int[]{R.id.name, R.id.year, R.id.description}, 0);
+        guitarAdapter = new SimpleCursorAdapter(view.getContext(), R.layout.list_row, guitarsCursor, headers, new int[]{R.id.idText, R.id.name, R.id.year, R.id.description}, 0);
         guitarList.setAdapter(guitarAdapter);
 //        view.getContext().deleteDatabase(DATABASE_NAME);
         addButton.setOnClickListener(new Button.OnClickListener() {
@@ -107,9 +107,9 @@ public class GuitarsListFragment extends Fragment {
         guitarList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 Intent i = new Intent(getActivity(), UpdateDeleteItemActivity.class);
-                i.putExtra("itemNumber", position);
+                TextView textView = (TextView) view.findViewById(R.id.idText);
+                i.putExtra("itemNumber", textView.getText());
                 startActivity(i);
                 getActivity().finish();
             }

@@ -17,7 +17,7 @@ public class UpdateDeleteItemActivity extends AppCompatActivity {
     TextView description;
     DatabaseHelper databaseHelper;
     SQLiteDatabase db;
-
+    int id;
     TextView mainInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +33,9 @@ public class UpdateDeleteItemActivity extends AppCompatActivity {
 
         databaseHelper = new DatabaseHelper(getApplicationContext());
         db = databaseHelper.getReadableDatabase();
-        int id = Integer.parseInt(getIntent().getExtras().get("itemNumber").toString()) + 1;
+        id = Integer.parseInt(getIntent().getExtras().get("itemNumber").toString());
         Cursor query = db.rawQuery("SELECT * FROM guitars", null);
+//        Log.i("message", String.valueOf(id));
         while(query.moveToNext()) {
             if(query.getInt(0) == id){
                 String nameString = query.getString(1);
@@ -46,7 +47,6 @@ public class UpdateDeleteItemActivity extends AppCompatActivity {
                 break;
             }
         }
-//        name.setText(nameString);
 
         BackToMain.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
