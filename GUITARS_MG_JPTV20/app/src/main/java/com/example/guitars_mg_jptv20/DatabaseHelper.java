@@ -43,20 +43,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_NAME
                 + " TEXT, " + COLUMN_YEAR + " INTEGER, " + COLUMN_DESCRIPTION + " TEXT);");
         // добавление начальных данных
-        db.execSQL("INSERT INTO "+ TABLE +" (" + COLUMN_NAME
-                + ", " + COLUMN_YEAR  + ", " + COLUMN_DESCRIPTION + ") VALUES ('Acoustic guitar', 1981, 'The best guitar ever');");
-        db.execSQL("INSERT INTO "+ TABLE +" (" + COLUMN_NAME
-                + ", " + COLUMN_YEAR  + ", " + COLUMN_DESCRIPTION + ") VALUES ('Acoustic guitar', 1981, 'The best guitar ever');");
-        db.execSQL("INSERT INTO "+ TABLE +" (" + COLUMN_NAME
-                + ", " + COLUMN_YEAR  + ", " + COLUMN_DESCRIPTION + ") VALUES ('Acoustic guitar', 1981, 'The best guitar ever');");
-        db.execSQL("INSERT INTO "+ TABLE +" (" + COLUMN_NAME
-                + ", " + COLUMN_YEAR  + ", " + COLUMN_DESCRIPTION + ") VALUES ('Acoustic guitar', 1981, 'The best guitar ever');");
-        db.execSQL("INSERT INTO "+ TABLE +" (" + COLUMN_NAME
-                + ", " + COLUMN_YEAR  + ", " + COLUMN_DESCRIPTION + ") VALUES ('Acoustic guitar', 1981, 'The best guitar ever');");
-        db.execSQL("INSERT INTO "+ TABLE +" (" + COLUMN_NAME
-                + ", " + COLUMN_YEAR  + ", " + COLUMN_DESCRIPTION + ") VALUES ('Acoustic guitar', 1981, 'The best guitar ever');");
-        db.execSQL("INSERT INTO "+ TABLE +" (" + COLUMN_NAME
-                + ", " + COLUMN_YEAR  + ", " + COLUMN_DESCRIPTION + ") VALUES ('Acoustic guitar', 1981, 'The best guitar ever');");
+//        db.execSQL("INSERT INTO "+ TABLE +" (" + COLUMN_NAME
+//                + ", " + COLUMN_YEAR  + ", " + COLUMN_DESCRIPTION + ") VALUES ('Acoustic guitar', 1981, 'The best guitar ever');");
+//        db.execSQL("INSERT INTO "+ TABLE +" (" + COLUMN_NAME
+//                + ", " + COLUMN_YEAR  + ", " + COLUMN_DESCRIPTION + ") VALUES ('CLassic guitar', 1882, 'Hello guitar');");
     }
     //-----------------------------------------------------------------------------------
     /*

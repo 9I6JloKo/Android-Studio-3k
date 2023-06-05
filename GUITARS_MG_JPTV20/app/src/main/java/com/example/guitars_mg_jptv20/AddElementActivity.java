@@ -1,17 +1,13 @@
 package com.example.guitars_mg_jptv20;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.TextView;
-
-import com.google.android.material.tabs.TabLayout;
 
 public class AddElementActivity extends AppCompatActivity {
     TextView name;
@@ -26,11 +22,11 @@ public class AddElementActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_element);
         mainInfo = findViewById(R.id.textView2);
-        name = findViewById(R.id.nameTextAdd);
-        year = findViewById(R.id.yearTextAdd);
-        description = findViewById(R.id.descriptionTextAdd);
+        name = findViewById(R.id.nameTextUpdate);
+        year = findViewById(R.id.yearTextUpdate);
+        description = findViewById(R.id.descriptionTextUpdate);
         Button BackToMain = findViewById(R.id.BackToMain);
-        Button addElemButton = findViewById(R.id.addElemButton);
+        Button addElemButton = findViewById(R.id.updateButton);
         BackToMain.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), MainActivity.class);

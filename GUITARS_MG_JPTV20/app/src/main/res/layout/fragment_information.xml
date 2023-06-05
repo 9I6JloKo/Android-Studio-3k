@@ -50,7 +50,7 @@
     <TextView
         android:id="@+id/textid"
         android:layout_width="392dp"
-        android:layout_height="160dp"
+        android:layout_height="220dp"
         android:layout_marginTop="92dp"
         android:scrollbars="vertical"
         android:text="TextView"

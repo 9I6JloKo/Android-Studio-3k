@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,6 +77,7 @@ public class InformationFragment extends Fragment {
         textView.setTextSize(16);
         textView.setPadding(30, 0, 30, 0);
         textView.setText("Гита́ра[1] — струнный щипковый музыкальный инструмент. Применяется в качестве аккомпанирующего или сольного инструмента во многих стилях и направлениях музыки, среди которых романс, блюз, кантри, фламенко, рок, джаз. Изобретённая в XX веке электрическая гитара произвела значительные изменения в музыке и тем самым оказала сильное влияние на массовую культуру. Также есть классическая гитара, гитара фламенко, испанская гитара и некоторые другие виды.");
+        textView.setMovementMethod(new ScrollingMovementMethod());
         btnLeft.setText("LEFT");
         btnLeft.setOnClickListener(new Button.OnClickListener() {
         public void onClick(View v) {

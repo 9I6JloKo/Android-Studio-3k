@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -100,6 +101,16 @@ public class GuitarsListFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), AddElementActivity.class);
                 startActivity(intent);
+                getActivity().finish();
+            }
+        });
+        guitarList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent i = new Intent(getActivity(), UpdateDeleteItemActivity.class);
+                i.putExtra("itemNumber", position);
+                startActivity(i);
                 getActivity().finish();
             }
         });

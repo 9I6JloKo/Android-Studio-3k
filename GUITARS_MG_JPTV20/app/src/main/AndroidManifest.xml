@@ -3,6 +3,7 @@
     package="com.example.guitars_mg_jptv20">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -12,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GUITARS_MG_JPTV20"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".UpdateDeleteItemActivity"
+            android:exported="false" />
         <activity
             android:name=".AddElementActivity"
             android:exported="false" />

@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,6 +79,7 @@ public class MaterialsFragment extends Fragment {
                 "Клен (Maple) ...\n" +
                 "Фигурный клен (Figured Maple) ...\n" +
                 "Тополь (Poplar)");
+        textView.setMovementMethod(new ScrollingMovementMethod());
         btnLeft.setText("LEFT");
         btnLeft.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
